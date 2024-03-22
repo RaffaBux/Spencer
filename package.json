@@ -1,0 +1,23 @@
+{
+  "name": "spencer",
+  "version": "1.0.0",
+  "description": "a project aimed at tracking the income and outcome of a home's storeroom items",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RaffaBux/Spencer.git"
+  },
+  "keywords": [
+    "food",
+    "storeroom"
+  ],
+  "author": "RaffaBux",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RaffaBux/Spencer/issues"
+  },
+  "homepage": "https://github.com/RaffaBux/Spencer#readme"
+}
