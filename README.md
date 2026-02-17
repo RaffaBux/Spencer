@@ -1,9 +1,16 @@
 # Spencer - Typescript Node Express application
 
-Start the application running:
+## Requirements:
+
+Run `npm run dev` to isntall project dependencies
+
+For the project to work, you must have this installed on your machine:
+* [MongoDB](https://www.mongodb.com/try/download/community)
+
+### Start the application by running:
 
 ```npm run dev```
 
-Run following command to start all tests:
+### Run following command to start all tests:
 
 ```npm test```
