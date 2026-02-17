@@ -2,7 +2,7 @@
   "name": "spencer",
   "version": "1.0.0",
   "description": "spencer server side",
-  "main": "./src/app.ts",
+  "main": "./src/server.ts",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
@@ -24,8 +24,10 @@
   },
   "homepage": "https://github.com/RaffaBux/Spencer#Readme",
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
+    "@types/mongoose": "^5.11.96",
     "@types/node": "^25.2.3",
     "dotenv": "^17.3.1",
     "eslint": "^10.0.0",
@@ -38,5 +40,9 @@
     "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "mongoose": "^9.2.1"
   }
 }
