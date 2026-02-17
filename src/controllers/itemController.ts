@@ -1,77 +1,77 @@
 import { Request, Response, NextFunction } from 'express';
-import { items, Item } from '../models/items';
+import { ItemModel } from "../models/items";
 
 // Create an item
-export const createItem = (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const { name } = req.body;
-        const newItem: Item = { id: Date.now(), name };
-        items.push(newItem);
-        res.status(201).json(newItem);
-    } catch (error) {
-        next(error);
-    }
+export const createItem = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { name } = req.body;
+    if (!name || typeof name !== "string") return res.status(400).json({ message: "name is required (string)" });
+
+    const created = await ItemModel.create({ name });
+    res.status(201).json(created);
+  } catch (err) {
+    next(err);
+  }
 };
 
 // Read all items
-export const getItems = (req: Request, res: Response, next: NextFunction) => {
-    try {
-        res.json(items);
-    } catch (error) {
-        next(error);
-    }
+export const getItems = async (_req: Request, res: Response, next: NextFunction) => {
+  try {
+    const items = await ItemModel.find().sort({ createdAt: -1 });
+    res.json(items);
+  } catch (err) {
+    next(err);
+  }
 };
 
 // Read single item
-    export const getItemById = (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const id = parseInt(req.params.id as string, 10);
-        const item = items.find((i) => i.id === id);
+export const getItemById = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const id = parseInt(req.params.id as string, 10);
+		if (Number.isNaN(id)) return res.status(400).json({ message: 'Invalid id' });
 
-        if (!item) {
-            res.status(404).json({ message: 'Item not found' });
-            return;
-        }
+		const item = await ItemModel.findById(id);
+		if (!item) return res.status(404).json({ message: 'Item not found' });
 
-        res.json(item);
-    } catch (error) {
-        next(error);
-    }
+		res.json(item);
+	} catch (error) {
+		next(error);
+	}
 };
 
 // Update an item
-export const updateItem = (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const id = parseInt(req.params.id as string, 10);
-        const { name } = req.body;
-        const itemIndex = items.findIndex((i) => i.id === id);
-        
-        if (itemIndex === -1) {
-            res.status(404).json({ message: 'Item not found' });
-            return;
-        }
+export const updateItem = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const updated = await ItemModel.findByIdAndUpdate(
+      req.params.id,
+      { name: req.body.name },
+      { new: true }
+    );
 
-        items[itemIndex].name = name;
-        res.json(items[itemIndex]);
-    } catch (error) {
-        next(error);
-    }
+    if (!updated)
+      return res.status(404).json({ message: "Item not found" });
+
+    res.json(updated);
+
+  } catch (err) {
+    next(err);
+  }
 };
 
 // Delete an item
-export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const id = parseInt(req.params.id as string, 10);
-        const itemIndex = items.findIndex((i) => i.id === id);
+export const deleteItem = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = req.params.id;
 
-        if (itemIndex === -1) {
-        res.status(404).json({ message: 'Item not found' });
-        return;
-        }
-        
-        const deletedItem = items.splice(itemIndex, 1)[0];
-        res.json(deletedItem);
-    } catch (error) {
-        next(error);
+    const deletedItem = await ItemModel.findByIdAndDelete(id);
+
+    if (!deletedItem) {
+      return res.status(404).json({ message: "Item not found" });
     }
+
+    res.json(deletedItem);
+
+  } catch (error) {
+    next(error);
+  }
 };
