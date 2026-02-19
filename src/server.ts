@@ -14,7 +14,7 @@ app.use(errorHandler);
 
 // Client-side CORS configuration
 app.use(cors({
-  origin: `http://localhost:${config.clientPort}`,
+  origin: `https://localhost:${config.clientPort}`,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
