@@ -8,7 +8,7 @@ import { connectDatabase } from "./database/database";
 const app = express();
 app.use(express.json());
 
-// Global error handler (should be after routes)
+// Middleware setup
 app.use(errorHandler);
 
 

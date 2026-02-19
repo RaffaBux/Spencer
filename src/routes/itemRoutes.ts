@@ -1,12 +1,10 @@
 import { Router } from 'express';
-import { createItem, getItems, getItemById, updateItem, deleteItem } from '../controllers/itemController';
+import { createItem, getItems, withdrawItem } from '../controllers/itemController';
 
 const router = Router();
 
-router.get('/', getItems);
-router.get('/:id', getItemById);
-router.post('/', createItem);
-router.put('/:id', updateItem);
-router.delete('/:id', deleteItem);
+router.get('/list', getItems);
+router.post('/add', createItem);
+router.post('/withdraw/:id', withdrawItem);
 
 export default router;
